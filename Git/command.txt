@@ -1,0 +1,27 @@
+-本地建立儲存庫
+git init
+-將新增的檔案加到版本控管的目錄"索引"
+git add .
+	-加入部分檔案
+	git add app(加入app開頭的檔案)
+	git add .*(加入點開頭的檔案)
+-重設工作目錄狀態
+git reset
+	-還原至最新版
+	git reset --hard
+-建立版本
+git commit
+git commit -m "版本紀錄的說明文字"
+-查詢歷史紀錄
+git log
+	-查詢近期紀錄
+	git log -10(查最新10筆)
+-刪除檔案
+git rm 'XXX.js'
+-更改名稱
+git mv test unit-test(test -> unit-test)
+-顯示工作目錄的索引狀態
+git status
+git status -s(較精簡)
+-還原改壞的檔案
+git checkout master XXX.js
