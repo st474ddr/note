@@ -1,0 +1,35 @@
+*****基本觀念*****
+Setup Menu 功能:
+-Company Information
+可看到公司資訊,組織ID,license...
+-Users
+可重置帳戶密碼,建立新的帳戶
+-Profiles
+可掌控權限選擇要不要讓誰觀看
+-View Setup Audit Trail	
+可看6個月內組織的歷史紀錄,會記錄所有的改變
+像誰加了欄位,誰改了密碼....
+-Login History
+登入紀錄
+
+Salesforce開發三個組成
+-Lightning Component Framework 
+類似React 或 AngularJS
+-Apex
+類似Java
+	-資料庫查詢語法為SOQL
+	EX:Property__c property = [SELECT Name, Price__c from Property__c WHERE Id=:propId];
+-Visualforce
+標籤語言,類HTML
+
+Lightning Experience 和 Salesforce Classic皆為Salesforce的UI
+
+基本名詞:
+Record:類DB的單筆資料
+Field:類DB的欄位
+Object:類DB的Table
+Org:Organization的縮寫 所有資料和設定和客製化內容都擺在這 也可以代表個人的Salesforce
+App:為fields,objects,permissions和一些基本功能之集合
+
+Application Lifecycle Management(APL):
+Plan -> Code -> Build -> Test -> Release
