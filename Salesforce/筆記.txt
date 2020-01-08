@@ -34,4 +34,4 @@ App:為fields,objects,permissions和一些基本功能之集合
 Application Lifecycle Management(APL):
 Plan -> Code -> Build -> Test -> Release
 
-Salesforce 為 PAAS(平台即服務)
+Salesforce 為 PAAS(平台即服務) 是一家雲公司
