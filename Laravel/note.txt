@@ -125,3 +125,22 @@ Route::middleware(['member'])->group(function () {
         // 經過member middleware驗證後才能進入
     });
 });
+
+*******view 結構*********
+★view($view_name):
+	$view_name
+	是要使用的view名字 如welcome.blade.php -> 'welcome'
+	
+★傳參數給View 
+view($view_name, $data):
+$data 必須是一個鍵值對應(key/value pairs)的陣列
+一個key對應到一個value，在view中可以用 {{$key}} 的方式使用
+向如下:’name’對應到’大帥哥’，然後在view中便可用 {{$name}} 去印出’大帥哥’
+web.php:
+Route::get('/', function () {
+    return view('frontend.welcome', ['name' => '大帥哥']);
+});
+welcome.blade.php:
+<div class="title m-b-md">
+    很高興見到你，{{$name}}
+</div>
