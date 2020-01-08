@@ -1,0 +1,4 @@
+function asset($path, $secure = null)
+用於引入CSS/JavaScript/images等文件
+例:
+{{ asset('bootstrap/css/bootstrap.min.css') }}

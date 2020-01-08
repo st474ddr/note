@@ -1,0 +1,22 @@
+搭配blade_template.jpg理解
+
+-master.blade.php
+	<!DOCTYPE html>
+	<html lang="zh-TW">
+	<head>
+		<title>Coffee Shop-@yield('title')</title>
+	</head>
+	<body>
+		@include('frontend.layouts.header')
+		@include('frontend.layouts.navbar')
+		@yield('content')
+		@include('frontend.layouts.footer')
+	</body>
+	</html>
+	
+-home.blade.php
+@extends('frontend.layouts.master')
+@section('title', 'Home')   {{-- 因應不同頁面給予不同title --}}
+@section('content')
+    {{-- 這邊放Home頁面的內容 --}}
+@endsection

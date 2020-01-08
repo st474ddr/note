@@ -106,7 +106,7 @@ Route::post('post', 'PostController @create);
 ->幫Route命名
 Route::get('post', 'PostController@index')->name('post.index');
 Route::post('post', 'PostController@login')->name('post.login');
-如此一來 只要用 route('post.index') / route('post.login) 就可以取得網址
+如此一來 只要在前端用 route('post.index') / route('post.login') 就可以取得網址
 
 ★Route Group – Prefixes前綴群組
 去群組同樣路徑下的網址
@@ -144,3 +144,10 @@ welcome.blade.php:
 <div class="title m-b-md">
     很高興見到你，{{$name}}
 </div>
+
+★Blade語法(可搭配blade example.txt)
+@include($name) – 插入 $name view
+@yield($name)   – 等待被繼承後填入內容
+@extends($name) – 繼承 $name view
+@section($name) – 將內容填入 @yield($name) ，繼承的樣板中必須要有對應的yield
+
