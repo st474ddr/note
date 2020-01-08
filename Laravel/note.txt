@@ -151,3 +151,37 @@ welcome.blade.php:
 @extends($name) – 繼承 $name view
 @section($name) – 將內容填入 @yield($name) ，繼承的樣板中必須要有對應的yield
 
+**********DB 結構*********
+★原生SQL語法
+select:
+<?php
+namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+class UserController extends Controller
+{
+    /**
+     * 顯示所有應用程式的使用者清單。
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $users = DB::select('select * from users where active = ?', [1]);
+        return view('user.index', ['users' => $users]);
+    }
+}
+?>
+透過?進行參數綁定,可防SQL Injection
+或可透過命名綁定方式
+select:
+$results = DB::select('select * from users where id = :id', ['id' => 1]);
+Insert:
+DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
+Update:
+$affected = DB::update('update users set votes = 100 where name = ?', ['John']);
+Delete:
+$deleted = DB::delete('delete from users');
+
+★Eloquent ORM(Object-Relational Mapping)
+將關聯式資料庫映射至物件導向 把資料庫中的資料變成一個物件(class)
