@@ -1,0 +1,127 @@
+*******Laravel根目錄下********
+----目錄----
+● app
+包含了整個網站大多數的核心程式，所寫的程式大多都會丟進這個資料夾，其中包含了Controller以及Model
+● bootstrap
+進行laravel的初始化，載入相關程式
+	-cache
+	用來提升網站運作的效能
+● config
+設定檔，包含app,database,session, cache, mail...等設定
+● database
+	-Migration
+	建立資料表，並記錄每一次資料表的更新，讓資料庫也可以進行版本控制。
+	-Seed
+	產生假資料，可以呼叫Factory來大量產生
+	-Factory
+	負責如何產生假資料的邏輯，然後給Seed使用
+● public
+專門放公開的檔案，包含網站的index文件，還有CSS, JavaScript, Image等等!
+● resources
+包含View，也就是網頁前端。其他還有網頁語言檔(可以讓網站顯示不一樣的語言)，以及還沒有被編譯的資源(e.g LESS, SASS…)
+● routes
+像網路的路由器，裡面有很多路由器，去處理使用者存取網站的要求。最常用到的就是web.php
+● storage
+包含編譯過後的Blade templates, 檔案式的session, cache以及log紀錄等各式各樣laravel本身產生的檔案
+● tests
+放自動化測試的程式
+● vendor
+都是從composer安裝的套件，同時這個資料夾在版本控制時會被排除，不會一起被同步
+
+----檔案----
+● .env – 環境設定檔
+根據專案開發環境，去給予不同的設定值，其中包含App, Database, Cache, Session, Mail
+	-APP 部分(關聯到/config/app.php):
+	-> APP_NAME – 專案的名稱
+	-> APP_ENV – 專案開發的環境(local / staging)
+	-> APP_KEY – 用作加密session, password以及其他重要資料 可以在CLI(命令列介面)使用php artisan key:generate隨機生成
+	-> APP_DEBUG – 提供在瀏覽器中顯示詳細的錯誤訊息來進行debug(true / false)
+	-> APP_LOG_LEVEL – 要laravel紀錄多詳細的log內容(log會儲存於/storage/logs)(debug / info / notice / warning / error / critical / alert / emergency)
+	-> APP_URL – 你專案網站的網址，像是:http://example.com / http://laravel.local，在之後使用url()時便可取得該網址
+	
+	-DB 部分(關聯到/config/database.php)
+	-> DB_CONNECTION – 根據使用的資料庫做設定，MySQL, MongoDB, SQLite, SQL Server…
+	-> DB_HOST – 資料庫主機的位置，本機預設為127.0.0.1
+	-> DB_PORT – 資料庫主機的port，預設為3306
+	-> DB_DATABASE – 資料庫的名稱
+	-> DB_USERNAME – 資料庫的帳號
+	-> DB_PASSWORD – 資料庫的密碼
+● composer.json & composer.lock – 相依套件管理
+composer.json就是去描述專案的套件相依性(使用哪些套件)
+當需要某個套件的時候，只要在composer.json的require中寫入: "vendor/package": "x.x.x"
+然後在CLI執行:composer update
+composer會去安裝你指定的套件，並且更新composer.lock檔
+composer.lock在每次有套件被安裝或更新時，會紀錄安裝套件的版本，並將這些資訊鎖定在這個檔案中
+
+*******Laravel VS Code 便利套件********
+● Laravel 5 Snippets – 讓你敲鍵盤幾下，就寫出laravel的語法片段，開發Speed Up!
+● Laravel 5 Blade Snippets – 讓你敲鍵盤幾下，就寫出laravel blade的語法片段，開發Speed Up!
+● Laravel Artisan – 讓你可以透過VS Code的指令列，快速執行Laravel Artisan的指令。
+
+*******Laravel 快捷鍵*********
+● Ctrl+` -> 呼叫終端機
+
+
+*******Route 結構*********
+★Route::{HTTP verb}($url, $callback);
+	HTTP verb: 
+	-> GET     – 取得資源
+	-> POST    – 新增一筆資源
+	-> PUT     – 更新一筆資源
+	-> Patch   – 更新一筆資源的部分內容
+	-> Delete  – 刪除一筆資源
+	-> Options – 取得Server支援的Request Types有哪些
+	$url:
+	代表接收到的網址，根目錄就是/，登入可能是/login
+	$callback:
+	代表處理這個要求的方法
+範例1:
+接收到根目錄('/') 就去取得welcome頁面
+Route::get('/', function ()
+{
+    return view('welcome');
+});
+也可以寫成
+Route::view('/', 'welcome');
+
+範例2:
+比較複雜的處理 會轉給Controller
+當接到 user/profile 這個網址， route 會去呼叫 UserController 裡面的 showProfile function
+Route::get('user/profile', 'UserController@showProfile');
+
+★Route傳遞參數
+1.必需參數:
+Route::get('post/{id}', 'PostController@show');
+2.可選參數:
+Route::get('users/{name?}', function ($name = 'Chase')
+{
+    return 'Hello, I am ' .$name;
+});
+
+★Route命名
+假設今天的Route
+Route::get('post', 'PostController@index);
+Route::post('post', 'PostController @create);
+可能用 url('/login') 來取網址 但可能會搞混
+->幫Route命名
+Route::get('post', 'PostController@index')->name('post.index');
+Route::post('post', 'PostController@login')->name('post.login');
+如此一來 只要用 route('post.index') / route('post.login) 就可以取得網址
+
+★Route Group – Prefixes前綴群組
+去群組同樣路徑下的網址
+Route::prefix('admin')->group(function ()
+{
+    Route::get('users', function ()
+    {
+        //所以網址要是/admin/users才會進來這裡
+    });
+});
+
+★Route Group – Middleware
+把一群Route組起來，經過驗證才可以進入存取
+Route::middleware(['member'])->group(function () {
+    Route::get('member_center', function () {
+        // 經過member middleware驗證後才能進入
+    });
+});
