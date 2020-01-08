@@ -1,4 +1,4 @@
-*****基本觀念*****
+﻿*****基本觀念*****
 Setup Menu 功能:
 -Company Information
 可看到公司資訊,組織ID,license...
@@ -33,3 +33,5 @@ App:為fields,objects,permissions和一些基本功能之集合
 
 Application Lifecycle Management(APL):
 Plan -> Code -> Build -> Test -> Release
+
+Salesforce 為 PAAS(平台即服務)
