@@ -191,30 +191,89 @@ php artisan make:model Product
 
 ★使用Model
 以Model:Product舉例
-●	一般存取資料:
+ ●	一般存取資料:
 <?php
 use App\Product;
 $products = App\Product::all();
 foreach ($products as $product) {
     echo $products->name;
 }
-●	加上where, order
+ ●	加上where, order
 $products = App\Product::where('price', '>', '100') // 取得price>100的products
                ->orderBy('price', 'desc') // 根據price由高到低排列
                ->take(10) // 只取前10筆資料
                ->get();
-●	Insert語法
+ ●	Insert語法
 <?php
 $product = new App\Product;
 $product->name = "Latte";
 $product->price = 80;
 $product->save();
-●	Update語法
+ ●	Update語法
 $product = App\Product::find(1); // 取得id (primarykey) = 1的資料
 $product->name = "Cappuccino";
 $product->price = 90;
 $product->save();
-●	Delete語法
+ ●	Delete語法
 $product= App\Product::find(1);
 $product->delete();
 
+★建立資料庫
+-產生Migration
+在命令列中輸入
+php artisan make:migration {action}_{table name}_table //建立migration檔案
+--create=[table name] // 會自動幫你產生建立table的Schema
+--table=[table name] //會自動幫你產生修改table的Schema
+例:
+php artisan make:migration create_products_table
+php artisan make:migration create_products_table --create=products
+php artisan make:migration create_products_table --table=products
+
+-Mirgration結構
+class CreateProductsTable extends Migration
+{
+    public function up()
+    {
+       // ...
+    }
+    public function down()
+    {
+        // ...
+    }
+}
+up被用於新增資料表、欄位、索引到你的資料庫
+down被用於回朔up的動作
+
+-建立資料表
+要建立資料表，必須把程式寫在up中
+例:
+public function up()
+{
+    Schema::create('products', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('name');
+        $table->text('description');
+        $table->unsignedInteger('price');
+        $table->timestamps();
+    });
+}
+
+-執行Mirgrations
+●執行所有未完成的migrations:
+php artisan migrate
+●還原最後的migration動作
+php artisan migrate:rollback
+●還原指定次數的migration動作
+php artisan migrate:rollback --step=5
+●還原所有的migrations
+php artisan migrate:reset
+還原所有的migrations，然後執行migrate的指令
+php artisan migrate:refresh
+移除資料庫中的所有資料表，然後執行migrate的指令
+php artisan migrate:fresh
+
+**********Controller 架構***********
+★建立Controller
+php artisan make:controller {Controller Name} --{option 1} -- {option 2} ...
+例:
+php artisan make:controller ProductController --resource --model=Product
