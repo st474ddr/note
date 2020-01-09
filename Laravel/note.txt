@@ -171,17 +171,50 @@ class UserController extends Controller
         return view('user.index', ['users' => $users]);
     }
 }
-?>
 透過?進行參數綁定,可防SQL Injection
 或可透過命名綁定方式
-select:
-$results = DB::select('select * from users where id = :id', ['id' => 1]);
-Insert:
-DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
-Update:
-$affected = DB::update('update users set votes = 100 where name = ?', ['John']);
-Delete:
-$deleted = DB::delete('delete from users');
+● select:
+	$results = DB::select('select * from users where id = :id', ['id' => 1]);
+● Insert:
+	DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
+● Update:
+	$affected = DB::update('update users set votes = 100 where name = ?', ['John']);
+● Delete:
+	$deleted = DB::delete('delete from users');
 
 ★Eloquent ORM(Object-Relational Mapping)
 將關聯式資料庫映射至物件導向 把資料庫中的資料變成一個物件(class)
+
+★建立Model
+透過命令列執行Artisan指令來自動產生Model 產生的Model檔案，預設存放於/app中:
+php artisan make:model Product
+
+★使用Model
+以Model:Product舉例
+●	一般存取資料:
+<?php
+use App\Product;
+$products = App\Product::all();
+foreach ($products as $product) {
+    echo $products->name;
+}
+●	加上where, order
+$products = App\Product::where('price', '>', '100') // 取得price>100的products
+               ->orderBy('price', 'desc') // 根據price由高到低排列
+               ->take(10) // 只取前10筆資料
+               ->get();
+●	Insert語法
+<?php
+$product = new App\Product;
+$product->name = "Latte";
+$product->price = 80;
+$product->save();
+●	Update語法
+$product = App\Product::find(1); // 取得id (primarykey) = 1的資料
+$product->name = "Cappuccino";
+$product->price = 90;
+$product->save();
+●	Delete語法
+$product= App\Product::find(1);
+$product->delete();
+
