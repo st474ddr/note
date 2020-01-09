@@ -276,4 +276,47 @@ php artisan migrate:fresh
 ★建立Controller
 php artisan make:controller {Controller Name} --{option 1} -- {option 2} ...
 例:
-php artisan make:controller ProductController --resource --model=Product
+php artisan make:controller ProductController 
+												--resource   //自動產生好CRUD(Create, Read, Update, Delete)方法(index, create, store, show, ,edit, update, destroy)
+												--model=Product  //連結Product Model
+★Controller結構
+<?php
+namespace App\Http\Controllers;        // Controller的命名空間
+use Illuminate\Http\Request;           // 使用的類別
+class PhotoController extends Controller
+{
+    // 在這裡面撰寫你的方法
+}
+★Route轉發要求給Controller
+例:
+// GET product的要求轉發給ProductController的index方法處理
+Route::get('product', 'ProductController@index');
+// GET product{id}的要求轉發給ProductController的show方法處理，同時會傳遞參數id
+Route::get('product/{id}', 'ProductController@show');
+// POST product的要求轉發給ProductController的store方法處理
+Route::post('product', 'ProductController@store');
+//	轉發所有CRUD要求給指定的Controller
+Route::resource('product', 'ProductController');
+此行會處理7種不同的要求
+Verb		URI						Action	Route Name
+GET			/product				index	product.index
+GET			/product/create			create	product.create
+POST		/product				store	product.store
+GET			/product/{photo}		show	product.show
+GET			/product/{photo}/edit	edit	product.edit
+PUT/PATCH	/product/{photo}		update	product.update
+DELETE		/product/{photo}		destroy	product.destroy
+
+有些資源處理要求不要,可以使用only或是except的方式來篩選
+Route::resource('product', 'ProductController', ['only' => [
+    'index', 'show'
+]]);
+Route::resource('product', 'ProductController', ['except' => [
+    'create', 'store', 'update', 'destroy'
+]]);
+偽造表單
+由於在HTML的Form中只有GET/POST，並沒有PUT, PATCH, DELETE，但Laravel需要去判別要求的種類
+所以使用時需要在前端的HTML Form中加入
+{{ method_field('PUT') }}
+這樣的隱藏input field，這相當於
+<input name="_method" type="hidden" value="PUT">
