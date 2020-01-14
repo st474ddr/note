@@ -46,6 +46,8 @@
 	-> DB_DATABASE – 資料庫的名稱
 	-> DB_USERNAME – 資料庫的帳號
 	-> DB_PASSWORD – 資料庫的密碼
+● .env.example – 環境變數
+	讓其他開發者知道有哪些環境變數需要設定
 ● composer.json & composer.lock – 相依套件管理
 composer.json就是去描述專案的套件相依性(使用哪些套件)
 當需要某個套件的時候，只要在composer.json的require中寫入: "vendor/package": "x.x.x"
