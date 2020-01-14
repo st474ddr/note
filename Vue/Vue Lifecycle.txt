@@ -1,0 +1,28 @@
+配合Lifecycle圖片
+總共8個hook
+代表8個function:
+-beforeCreate
+在初始化vue instance並開啟整個Lifecycle後，資料綁定與事件配置之前。目前階段還無法調用$data。
+應用場景：loading進頁面的事件
+
+-created
+vue instance創建完成，$data已可以取得，屬性與事件也已綁定好。目前階段尚未掛載el，DOM也尚未生成。
+
+-beforeMount
+在掛載el開始之前。目前階段是相關render函式首次被調用，尚未被DOM給綁定。
+
+-mounted
+el被剛創建好的vm.$el替換取代，並且掛載到vm上。目前階段已被DOM綁定。
+應用場景：對後端發出請求或讀取新資料
+
+-beforeUpdate
+在資料更新時調用，Virtual DOM重新render與patch之前，可以在這個階段變更資料狀態。目前階段還不會繪製view。
+
+-updated
+資料更新後會使Virtual DOM重新render頁面。目前階段會繪製出正確的view。
+
+-beforeDestroy
+在vue instance被銷毀前調用。目前階段還可以完全使用這個vue instance。
+
+-destroyed
+vue instance銷毀後可以調用，調用後這個vue instance底下的資料與樣板會解除綁定，事件會取消監聽，所有子元件也會被銷毀。

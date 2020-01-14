@@ -1,0 +1,21 @@
+**********初識 Vue.js************
+通常一個元件的html, css, js會全寫在.vue為副檔名的檔案中，vue-loader會編譯這個.vue的檔案
+一個.vue檔會有三個部分，<template></template>裡面寫html、<script></script>裡面寫js、<style></style>裡面寫css
+ex:
+<template>
+	<!-- html -->
+</template>
+
+<script>
+	//javascript
+</script>
+
+<style>
+	/*CSS*/
+</style>
+**********Vue的建構(Vue Instance)************
+透過Constructor建構Vue Instance
+傳入options來當作其他設定:
+var vm = new Vue ({
+    // options
+})
