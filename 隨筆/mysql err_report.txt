@@ -1,0 +1,21 @@
+﻿回報訊息:
+Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 
+‘support_desk.mod_users_groups.group_id’ which is not functionally dependent on columns 
+in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+原因:
+在group by 的時候會有些被合併時而不確定
+(mysql version >= 5.7)
+例:
+id name
+1   A
+2   A
+若下select * from tbl group by name 
+找到結果name的值一定是A 
+但由於mysql不知道該呈現的值應為1或2 
+所以會跳出這個錯誤 
+解決辦法:
+1.修改sql_mode
+SET GLOBAL sql_mode = '';
+或
+set @@sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+2.把他詢問的值也加入group by中
