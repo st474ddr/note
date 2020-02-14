@@ -1,0 +1,75 @@
+onmouseover="ImageHover.init(event,'addOrderItemForm_chooseProduct_categories_0_productOrderRequests_0_product_image_full','addOrderItemForm_chooseProduct_categories_0_productOrderRequests_0_product_image_thumb',true);"
+
+
+
+//image hover
+var ImageHover = new function() {
+	var turnOn = true;
+	this.toggle = function(onOff) {
+		turnOn = onOff;
+	};
+	var middleMode = false;
+	
+	var curretShowId = null;
+	function clearCurrent() {
+		if(curretShowId) {
+			clearTimeout(curretShowId);
+		}
+	}
+	this.init = function(event, fullId, thumbId, isMiddle) {
+		var imgThumb = $(thumbId);
+		var imgFull = $(fullId) ;
+		clearCurrent();
+		if(turnOn) {
+			curretShowId = setTimeout("ImageHover.show('"+fullId+"')",300);
+		}
+		if(imgThumb.initialized) {return ;}
+		if(isMiddle) {middleMode = isMiddle;}
+
+		imgThumb.full = imgFull;
+		imgFull.src=imgFull.alt;
+		imgThumb.onmouseout = function(e) {
+			clearCurrent();
+			this.full.style.display='none';
+		};
+		imgThumb.onmousemove = function(e) {
+			doLocate(e, this.full);
+		};
+		imgThumb.initialized=true;
+	};
+	
+	this.show = function(imgId) {
+		$(imgId).style.display='';
+	};
+
+	var offset = 15 ;
+	function doLocate(event, imgFull) {
+		if(!turnOn) {return;}
+		
+		if(!event) {event=window.event;}
+		var scrollTop = Window.getScrollTop();
+		var cusorTop = event.clientY + scrollTop;
+		//by default use bottom 
+		imgFull.style.top = ( cusorTop + offset )+ 'px';
+
+		if(	Window.getHeight() - event.clientY - imgFull.height < 0 ) { //bottom not enouch
+			var topViewSize = event.clientY;
+			var bottomViewSize = Window.getHeight() - event.clientY;
+			if(middleMode) {
+				var adjust = (cusorTop - ( imgFull.height - bottomViewSize )-offset );
+				imgFull.style.top = (adjust < scrollTop ? scrollTop+offset : adjust ) + 'px';
+			} else {
+				//top enough or top space larger than bottom
+				if(event.clientY > imgFull.height || topViewSize > bottomViewSize) { 
+					imgFull.style.top = ( cusorTop - imgFull.height - offset )+ 'px';
+				}
+			}
+		} 
+		if(event.clientX + imgFull.width > Window.getWidth()) {
+		    var estimate = (event.clientX - imgFull.width) ;
+		    imgFull.style.left= (estimate < 0 ? 100 : estimate ) + 'px';
+		} else {
+		    imgFull.style.left= (event.clientX + offset) + 'px';
+		}
+	}
+};
