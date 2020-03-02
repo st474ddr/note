@@ -1,0 +1,6 @@
+- IAM(Identify Access Management)
+:AWS 用來提供各種 AWS 旗下服務權限管控的服務
+- MFA(Multi-factor authentication)
+:多重要素驗證
+-S3(Simple Storage Service)
+:只要是需要將檔案獨立成一份份作為儲存至雲端上的情境幾乎都有關
