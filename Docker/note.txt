@@ -1,0 +1,50 @@
+﻿◎ Docker 用意:
+1.在安裝一些service時常常會遇到作業系統版本不同、Kernel不同、環境變數設定沒設定或是設定檔沒設定正確…等，而造成 service 無法正常的啟動起來，會花費很多的時間在 trial and error 而造成工作的效率變差。
+
+2.如果在程式的撰寫過程中需要有多個測試環境，例如測試不同版本的 service 是否能在我們撰寫的 code 上正常的執行。如果把這個 service直接安裝在自已的作業系統環境上，需要換版本測試時會反覆的安裝和解安裝，容易因為沒有解安裝完整，舊版的檔案還存在。而造成版本混亂service 也就無法正常的啟動起來。
+
+3.如果在開發一個 open source 的專案，如果希望要給很多人來使用，那就需要有一個簡單的安裝方法。像是可以把開發完的程式包成 docker image 然後放到 docker hub上，使用者如果想要使用，只要下幾行 command 就可以把我們開發的程式執行起來了。
+
+-系統架構
+:Client-Server 
+-> Client 稱為 Docker Client
+用 Restful API 連到 Docker daemon,且提供 command line 
+-> Server 稱為 Docker Daemon
+執行管理 Docker image、啟動 container、停止 container 的 service
+提供 Restful API 給使用者做操作或是顯示一些 Docker container 的狀態訊息
+
+-常見名詞
+1.Docker image
+唯讀檔,啟動 Docker container 要使用到的檔案, 可"堆積"(見Docker_image_stack.png)
+來源:
+	● 從網路上的 Docker Hub pull
+	● 從另一台電腦上的 Docker image export 出來，然後在 import 到自已的電腦
+	● 自行撰寫 Dockerfile
+
+2.Docker Container
+透過 Docker image 執行起來的 Process, 一個 Docker image 可以啟動多個 Docker Container
+Docker Container 之間環境是隔離的 不會發生像port互衝問題(container1 開 8080 的 port，container2 開 8080 的 port有衝到)
+
+3.Docker Hub
+存放 Docker image的倉庫
+在自已的內部環境下架設一個私有的Docker Hub 又被稱為 Docker Registry
+
+★ Windows Docker
+在 Docker 裡面，其實是有分 Detached 和 foreground，所謂的 Detached 就是所謂的背景執行 ( -d 參數 )
+背景執行的時候，基本上，要和 Container 溝通，就只能靠網路芳鄰等機制了
+也就是說，沒辦法用終端機進行溝通，除非我們再把他給 attach 
+
+而如果要使用 foreground，我們則要使用 -it 這個參數。
+
+所以我們要下 docker run -it ubuntu bash 這個命令的意思就是，我們要運行 ubuntu，
+並使用 foreground 模式，並且於啟動後，進入 bash .
+
+當然，大家也可以試試看，如果沒有加 -it ，基本上，只 run 一下，馬上就跳回來了 XDD
+
+那 -it 是甚麼意思呢，根據官方文件如下。
+-i : Keep STDIN open even if not attached
+-t : Allocate a pseudo-tty
+
+簡單的說，加上 -I ，無論有無 Attach ，都會確保 STDIN 有持續開啟，而使用 -t ，則會分配一個 tty 。
+所以如果只輸入 -t ，沒有 STDIN ，那畫面就會顯示在那邊，一動也不動，也沒辦法輸入；
+所以通常我們必須使用 -it ，才能進行操作。
