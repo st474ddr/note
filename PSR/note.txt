@@ -1,0 +1,16 @@
+// Coding Style(PHP)
+★PSR-1 基本style
+1.檔案只可使用 <?php 和 <?= tags.
+2.檔案只可使用 UTF-8 不含 BOM
+3.檔案內容必須是宣告檔(classes, functions, constants, etc.)或是執行檔(例如: 產出執行結果, 改變 .ini)，不可混用    (side effect:有副作用的寫法 像是 echo,include,print..等會影響原本結構的而非純宣告類)
+4.namespace以及class必須符合 PSR 的自動加載規範 (PSR0或PSR4)
+5.Class必須用駝峰式宣告 => 大駝峰:FirstName 
+6.Class中的常數變數一定要全大寫且分隔要用底線分開
+7.Class中的method必須用駝峰式宣告 => 小駝峰:lastName
+
+★PSR-2 
+1.程式碼要用4個space 而非tab
+2.一行程式碼最多不要超過120字元 最好在80以下
+3.namespace和 use 宣告完的下方要空一行空白行
+4.Class和method 的{}必須各自佔一行
+5.
