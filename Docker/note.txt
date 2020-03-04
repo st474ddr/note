@@ -29,6 +29,22 @@ Docker Container 之間環境是隔離的 不會發生像port互衝問題(contai
 存放 Docker image的倉庫
 在自已的內部環境下架設一個私有的Docker Hub 又被稱為 Docker Registry
 
+★ Docker 指令
+1.docker search ubuntu -f is-official=true
+  => 從 Docker Hub 搜尋 Ubuntu 的 Docker Image
+2.docker pull ubuntu
+  => 從 Docker Hub 把 Ubuntu下載到local
+3.docker images
+  => 顯示local存在的images
+4.(winpty) docker run -it ubuntu bash
+  => 執行container 並進入 container 的 terminal
+5.docker ps -a
+  => 查看執行中的container
+6.exit(在container 的 terminal 輸入)
+  => 離開 container 的 terminal 且關閉 container
+7.ctrl + p 在輸入 ctrl + q(在container 的 terminal 輸入)
+  => 離開 container 的 terminal 不關閉 container
+
 ★ Windows Docker
 在 Docker 裡面，其實是有分 Detached 和 foreground，所謂的 Detached 就是所謂的背景執行 ( -d 參數 )
 背景執行的時候，基本上，要和 Container 溝通，就只能靠網路芳鄰等機制了
