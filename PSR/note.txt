@@ -9,8 +9,132 @@
 7.Class中的method必須用駝峰式宣告 => 小駝峰:lastName
 
 ★PSR-2 
-1.程式碼要用4個space 而非tab
-2.一行程式碼最多不要超過120字元 最好在80以下
-3.namespace和 use 宣告完的下方要空一行空白行
-4.Class和method 的{}必須各自佔一行
-5.
+- 通用:
+	● 檔案
+		◎ 所有的 PHP 檔案最後要空一行
+		◎ 只有PHP 的檔案 不要加 ?> 結尾
+	● 行
+		◎ 一行程式碼最多不要超過120字元 最好在80以下
+		◎ 每一行結尾絕對不能有多餘的空格
+	● 縮排
+		◎ 程式碼要用4個space 而非tab
+	● 特別字
+		◎ 關鍵字(die(), xor, try...) 一定要全小寫
+		◎ true,false,null一定要全小寫
+
+- Namespace 和 use:
+	● Namespace
+		◎ namespace 宣告完的下方要空一行空白行
+	● use
+		◎ use一定要在 namesapce 之後宣告
+		◎ 一行只宣告一個 use
+		◎ use 宣告完的下方要空一行空白行
+
+- Classes、Properties、Methods:
+	● Classes
+		◎ extends 和 implements 關鍵字必須要跟 class 名稱宣告在同一行
+		◎ Class的{}必須各自佔一行
+		◎ implement 可能會有多行，若是如此，每一個要實作的介面都獨自一行
+
+class OneImplementClass extends Controller implements TestContract
+{
+    //繼承和實作關鍵字在同一行
+}
+
+class MultiImplementClass extends Controller implements
+    TestContract,
+    SecondContract,
+    ThirdContract
+{
+    //implements 多個介面，一行塞不下所以拆成多行，一行只放一個介面名稱
+}
+
+	● Properties
+		◎ 所有屬性都要宣告可視範圍
+		◎ 絕對不能用 var 這個關鍵字宣告屬性
+		◎ 一行只能宣告一個屬性
+		◎ protected 或 private 可視範圍的屬性名稱開頭不應該加上 _ 符號
+	● Methods
+		◎ 所有methods都要宣告可視範圍
+		◎ protected 或 private 可視範圍的 method 名稱開頭不應該加上 _ 符號
+		◎ Method 名稱後面絕對不能有空格
+		◎ method 的{}必須各自佔一行
+		◎ 傳入 Method 的多個參數可以拆成多行，若拆成多行時一行只能放一個參數，且第一個參數要換行，開始的左大括弧要跟結束的右小括號同一行，中間用空格隔開
+
+ public function argList(
+        int $arg1,
+        $arg2,
+        array $arg = []
+    ) {
+        //多個參數可拆成多行，但一行只能放一個參數
+        //結束的右小括號要跟開始的左大括弧同一行，中間用空格隔開
+    }
+
+	● abstract, final and static
+		◎ 如果有 abstract 和 final 的話，必須要宣告在可視範圍之前
+		◎ 如果有 static 的話，必須宣告在可視範圍之後
+	● 呼叫 Method 和 Function
+		◎ 呼叫 method 或 function 時，在名稱和開始的(中間絕對不能有空格
+		◎ method 或 function 的開始左小括號後面絕對不能有空格，結束右小括號前面絕對不能有空格
+		◎ 傳入的多個參數，在每個逗點前面絕對不能有空格，在每個逗點後面絕對要有一個空格
+		◎ 多個參數可以拆成多行，若拆成多行時一行只能放一個參數，且第一個參數要換行
+
+		//每個逗點前面絕對不能有空格，後面絕對要有一個空格
+        $test->multiArguments($arg1, $arg2, $arg3);
+
+        //一個參數一行
+        $test->multiArgsList(
+            $arg1,
+            $arg2,
+            $arg3
+        );
+
+- 控制結構:
+	● 通用
+		◎ 在控制結構關鍵字(if,switch..)後面必須要有一個空格
+		◎ 在開始的(後面絕對不能有空格，在結束的)前面絕對不能有空格
+		◎ 在結束的)和開始的{之間必須要有一個空格
+		◎ 程式碼區塊必須要縮排一次
+		◎ 開始的{一定要在同一行，結束的}一定要在程式碼區塊的下一行
+	● if, elseif, else
+		◎ 應該把 else if 替換成 elseif 讓所有控制結構關鍵字看起來像一個字
+		◎ if的}會跟 elseif的 {在同一行
+	● switch, case
+		◎ case 必須要比 switch 多縮排一次
+		◎ break 或其他結束關鍵字必須要縮排
+		◎ 如果 case 語句內程式碼區塊不為空且不跳脫，必須加上 // no break 的註解
+
+- 閉包(Closures):
+	● 宣告閉包時，必須在 function 關鍵字後空一格，並且在 use 關鍵字前後都必須要有空格
+	● 開始的{一定要在同一行，結束的}一定要在程式碼區塊的下一行
+	● 在開始的(後面和結束的)前面絕對不能有空格
+	● 分隔參數或變數的逗點前一定不能有空格，逗點後一定要有一個空格
+	● 有預設值的參數必須要放在最後面
+
+	  $closure_args_and_vars = function ($arg1, $arg2) use ($var1, $var2) {
+            // closure body
+        };
+
+	● 參數和變數可以分割成多行，要縮排一次，第一個參數或變數要換下一行，一行只能有一個參數或變數
+	● 如果參數或變數分割成多行，結束的(和開始的}要放在同一行，並且用空格隔開
+
+	 $long_args_and_vars = function (
+            $arg_line1,
+            $arg_line2,
+            $arg_line3
+        ) use (
+            $var1,
+            $var2
+        ) {
+            // closure body
+        };
+
+	● 閉包也可以在呼叫 method 或 function 的時候當參數直接傳過去
+
+	$foo->bar(
+            $arg1,
+            function ($arg2) use ($var1) {
+                // closure body
+            },
+            $arg3
+        )
