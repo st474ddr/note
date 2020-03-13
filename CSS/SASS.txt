@@ -1,6 +1,7 @@
 SASS經過編譯 可轉成 CSS
 -寫法差別:
-底下一次Tab 為其子元素
+1.底下一次Tab 為其子元素
+2.不用{} ,不用: ,不用; ,不用,
 CSS:
 .menu{
   position: relative;
@@ -14,7 +15,7 @@ CSS:
 .menu span{
   color: #fff
 }
-.menu i{
+.menu span i{
   background: url(dot-icon.png);
 }
 
@@ -27,11 +28,13 @@ SCSS:
     display: block
   span
     color: white
-  i
-    background: url(dot-icon.png)
+	i
+		background: url(dot-icon.png)
 
 -變數
-
+$link-color-1: #000
+.header a
+  color: $link-color-1
 
 -管理檔案
 @import SCSS,SASS
