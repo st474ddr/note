@@ -1,0 +1,39 @@
+SASS經過編譯 可轉成 CSS
+-寫法差別:
+底下一次Tab 為其子元素
+CSS:
+.menu{
+  position: relative;
+}
+.menu li{
+  float: left  
+}
+.menu a{
+  display: block
+}
+.menu span{
+  color: #fff
+}
+.menu i{
+  background: url(dot-icon.png);
+}
+
+SCSS:
+.menu
+  position: relative
+  li
+    float: left
+  a
+    display: block
+  span
+    color: white
+  i
+    background: url(dot-icon.png)
+
+-變數
+
+
+-管理檔案
+@import SCSS,SASS
+:方便統一一份CSS檔 可以把CSS程式碼切成好幾份來做檔案管理，最後編譯出來合併成一個CSS檔案
+Sass檔案命名前面加個『_』的話，那就不會編譯出來，例：「_reset.sass」
