@@ -19,7 +19,7 @@ CSS:
   background: url(dot-icon.png);
 }
 
-SCSS:
+SASS:
 .menu
   position: relative
   li
@@ -36,7 +36,69 @@ $link-color-1: #000
 .header a
   color: $link-color-1
 
+-元素計算
+$font-size:6px
+.font-big
+  font-size: $font-size * 1.2
+.font-middle
+  font-size: $font-size - px
+.font-small
+  font-size: $font-size / 3
+
 -管理檔案
-@import SCSS,SASS
+@import SASS
 :方便統一一份CSS檔 可以把CSS程式碼切成好幾份來做檔案管理，最後編譯出來合併成一個CSS檔案
 Sass檔案命名前面加個『_』的話，那就不會編譯出來，例：「_reset.sass」
+
+-元素屬性變數
+可帶變數
+@mixin bg($bgcolor:#000,$width:200px) 
+	background: $bgcolor
+	width: $width
+	
+.header
+	+bg
+.footer
+	+bg(#ff0000,300px)
+
+CSS:
+.header {
+  background: black;
+  width: 200px;
+}
+.footer {
+  background: red;
+  width: 300px;
+}
+
+-繼承
+不可帶變數
+%all-h1
+	font-size: 20px
+	line-height: 1.8
+	letter-spacing: 1px
+.header h1
+	@extend %all-h1
+	color: #000
+.content h1
+	@extend %all-h1	
+	color: green
+.footer
+	@extend %all-h1	
+	color: pink
+
+CSS:
+.header h1, .content h1, .footer h1 {
+  font-size: 20px;
+  line-height: 1.8;
+  letter-spacing: 1px;
+}
+.header h1 {
+  color: black;
+}
+.content h1 {
+  color: green;
+}
+.footer {
+  color: pink;
+}
