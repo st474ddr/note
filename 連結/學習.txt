@@ -1,0 +1,5 @@
+1.PHP各版本差異 5.2——7.0
+https://www.twblogs.net/a/5b882ea22b71775d1cdaec4c
+
+2.從ES6開始的JavaScript學習生活
+https://eyesofkids.gitbooks.io/javascript-start-from-es6/content/

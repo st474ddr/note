@@ -1,0 +1,90 @@
+...在ES6中代表
+1.展開運算符(Spread Operator)
+-功能一:
+->把一個陣列展開成個別值，這個運算符後面必定接著一個陣列
+->常見的是用來組合(連接)陣列，對應的陣列方法是concat
+
+example:
+const params = [ "hello", true, 7 ]
+const other = [ 1, 2, ...params ] // [ 1, 2, "hello", true, 7 ]
+
+example:
+function sum(a, b, c) {
+  return a + b + c
+}
+const args = [1, 2, 3]
+sum(…args) // 6
+
+-功能二:
+->把可迭代(iterable)或與陣列相似(Array-like)的物件轉變為陣列
+->在JS中內建的可迭代(iterable)物件有String、Array、TypedArray、Map與Set
+->而與陣列相似(Array-like)的物件指的是函式中的隱藏物件"arguments"
+
+example:
+const aString = "foo"
+const chars = [ ...aString ] // [ "f", "o", "o" ]
+
+example:
+var arr = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+var arr2 = [...(new Set(arr))] //[1,2,3,4,5] (快速去除重複)
+
+
+2.其餘運算符(Rest Operator)
+功能一:
+->將"不確定的傳入參數值們"在函式中轉變成為一個陣列來進行運算
+->常用在函式定義中的傳入參數定義中
+->要取代函式中那個隱藏"偽陣列"物件arguments
+
+example:
+function sum(…numbers) {
+  const result = 0
+
+  numbers.forEach(function (number) {
+    result += number
+  })
+
+  return result
+}
+
+sum(1) // 1
+sum(1, 2, 3, 4, 5) // 15
+
+example:
+function aFunc(x, ...y){
+  console.log('x =', x,  ', y = ' , y)
+}
+
+aFunc(1,2,3) //x = 1, y = [2, 3]
+aFunc() //x = undefined, y = []
+
+功能二:
+->用來解構賦值(destructuring)
+->以類似"鏡子"對映樣式(pattern)來進行賦值
+
+example:
+const [x, y, z] = [1, 2, 3]
+
+console.log(x) //1
+
+example:
+const [x, ...y] = [1, 2, 3]
+
+console.log(x) //1
+console.log(y) //[2,3]
+
+example:
+const [x, y, ...z] = [1]
+
+console.log(x) //1
+console.log(y) //undefined
+console.log(z) //[]
+
+example:
+function f(...[a, b, c]) {
+  return a + b + c;
+}
+
+f(1)          // NaN (b and c are undefined)
+f(1, 2, 3)    // 6
+f(1, 2, 3, 4) // 6 (the fourth parameter is not destructured)
+

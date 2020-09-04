@@ -9,6 +9,8 @@ git add .
 git reset
 	-還原至最新版
 	git reset --hard
+	-清除暫存索引(add後的結果)(前提是已有commit紀錄)
+	git reset HEAD
 -建立版本
 git commit
 git commit -m "版本紀錄的說明文字"
@@ -16,6 +18,10 @@ git commit -m "版本紀錄的說明文字"
 git log
 	-查詢近期紀錄
 	git log -10(查最新10筆)
+	-圖形化
+	git log --graph
+	-一行圖形化
+	git log --graph --oneline
 -刪除檔案
 git rm 'XXX.js'
 -更改名稱
@@ -23,5 +29,33 @@ git mv test unit-test(test -> unit-test)
 -顯示工作目錄的索引狀態
 git status
 git status -s(較精簡)
--還原改壞的檔案
-git checkout master XXX.js
+-檔案將回復至最新版本(從 index 開始追朔)
+git checkout 檔案
+	-檔案將回復至特定提交版本
+	git checkout 提交節點 檔案
+	-還原改壞的檔案
+	git checkout master XXX.js
+-顯示.git中的config
+git config --system -l
+-顯示home directiory 中的config
+git config --global -l
+-顯示檔案修改前後差異(未add前)
+git diff
+-選擇某個分支的某些提交記錄(只是暫存)
+git cherry-pick 提交節點
+	-接到master尾巴
+	git cherry-pick 提交節點 -n
+	git cherry-pick 提交節點 --no-commit
+情境:在開發階段的尾聲，準備合併回主線時，老闆說「B、C 功能會在這次上線，A 功能再等等吧」
+-回到指定的commit節點的前一節點
+git revert commit 節點
+	-取消git revert指令
+	git revert --abort 
+
+
+-----gitignore設定
+1.可用*
+2.可用!代表排除
+ex:
+*.txt
+!note.txt

@@ -1,0 +1,16 @@
+當一個變數或方法的可視性被宣告為 static，該變數或方法可以在類別還沒有被實例化就被調用
+可以透過範圍解析運算子(scope resolution operator) :: 來調用這些 static 屬性或方法
+class MyClass
+{
+    public static $count = 0;
+
+    public static function plusOne()
+    {
+        return "The count is " . ++self::$count . ".<br />";
+    }
+}
+
+do {
+  // Call plusOne without instantiating MyClass
+    echo MyClass::plusOne();
+} while ( MyClass::$count < 10 );
